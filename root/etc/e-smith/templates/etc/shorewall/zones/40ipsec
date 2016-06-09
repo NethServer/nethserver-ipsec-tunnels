@@ -1,0 +1,5 @@
+#
+# 40ipsec zones
+#
+ivpn:net   ipsec
+

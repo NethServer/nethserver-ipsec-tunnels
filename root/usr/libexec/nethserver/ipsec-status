@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+
+use JSON;
+use esmith::ConfigDB;
+
+my $db = esmith::ConfigDB->open("vpn") || die("Could not open VPN DB");
+
+my %tunnels;
+
+foreach my $tunnel ($db->get_all_by_prop('type' => 'ipsec-tunnel')) {
+    my %status;
+    my $s = $tunnel->prop('status') || "disabled";
+    next if ($s eq 'disabled');
+    my $name = $tunnel->key;
+    $status{'localnets'} = $tunnel->prop('leftsubnets');
+    $status{'remotenets'} = $tunnel->prop('rightsubnets');
+    my $ret = system("/usr/sbin/ipsec status 2>/dev/null| grep $name | grep -q 'IPsec SA established'");
+    $status{'status'} = int($ret == 0);
+    $tunnels{$name} = \%status;
+}
+
+print to_json(\%tunnels);

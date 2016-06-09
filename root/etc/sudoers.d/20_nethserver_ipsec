@@ -1,0 +1,6 @@
+#
+# 20_nethserver_ipsec
+#
+%adm ALL=NOPASSWD: /usr/libexec/nethserver/ipsec-status
+
+

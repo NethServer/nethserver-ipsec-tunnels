@@ -1,0 +1,74 @@
+{
+    #
+    # 20net2net
+    #
+    use esmith::NetworksDB;
+    use NetAddr::IP;
+    my $ndb = esmith::NetworksDB->open_ro();
+
+    my @required_params = qw(left leftsubnets right rightsubnets);
+    foreach my $tunnel ($vpnsDb->get_all_by_prop('type' => 'ipsec-tunnel')) {
+	my $status = $tunnel->prop('status') || 'disabled';
+        next if ($status ne 'enabled');
+
+        my $skip = 0;
+
+        foreach (@required_params) {
+            if (!defined($tunnel->prop($_))) {
+                $skip = 1;
+            }
+            
+        }  
+
+        next if ($skip == 1);
+
+        my %props = $tunnel->props;
+        my $name = $tunnel->key;
+        my @to_be_deleted = qw(status type ikecipher ikehash ikepfsgroup esp espcipher esphash esppfsgroup psk);
+        my $haystack = (split /,/, $props{'leftsubnets'})[0];
+        foreach (qw(leftsubnets rightsubnets)) {
+            $props{$_} =~ s/,/ /g;
+            $props{$_} = "{ ". $props{$_} ." }";
+        }
+        $props{'auto'} = 'start'; # force start mode
+        $props{'authby'} = 'secret'; # force psk auth method
+        my $ike = $props{'ike'} || '';
+        my $esp = $props{'esp'} || '';
+        if ($ike eq 'custom') {
+            $props{'ike'} = $props{'ikecipher'} .'-'.  $props{'ikehash'} .';'. $props{'ikepfsgroup'};
+            $t = $props{'ikelifetime'} || "86400";
+            $props{'ikelifetime'} = $t .'s';
+        } else {
+            push(@to_be_deleted, qw(ike ikelifetime));
+        }
+
+        if ($esp eq 'custom') {
+            $props{'phase2alg'} = $props{'espcipher'} .'-'.  $props{'esphash'} .';'. $props{'esppfsgroup'};
+            $t = $props{'salifetime'} || "3600";
+            $props{'salifetime'} = $t .'s';
+        } else {
+            push(@to_be_deleted, 'salifetime');
+        }
+
+        $haystack = NetAddr::IP->new($haystack);
+        foreach ($ndb->interfaces()) {
+            my $ipaddr = $_->prop('ipaddr') || next;
+            my $needle = NetAddr::IP->new($ipaddr);
+            if ($needle->within($haystack)) {
+                $props{'leftsourceip'} = $ipaddr;
+                last;
+            }
+        }
+
+        # remove empty options
+        for (keys %props) {
+            delete $props{$_} unless $props{$_} 
+        }
+
+        delete(@props{@to_be_deleted});
+
+        $conn->{$name . '_ipsec-tunnel'} = \%props;
+   }
+ 
+    '';
+}

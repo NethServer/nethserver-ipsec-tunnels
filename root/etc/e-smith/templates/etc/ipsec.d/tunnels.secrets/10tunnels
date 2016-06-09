@@ -1,0 +1,18 @@
+#
+# 40clients
+#
+{
+    use esmith::AccountsDB;
+    my $db = esmith::AccountsDB->open_ro('vpn') || die("Could not open vpn DB!");
+
+    $OUT = '';
+    foreach my $tunnel ($db->get_all_by_prop('type' => 'ipsec-tunnel')) {
+
+	my $psk = $tunnel->prop('psk') || next;
+	my $leftid = $tunnel->prop('leftid') || $tunnel->prop('left');
+	my $rightid = $tunnel->prop('rightid') || $tunnel->prop('right');
+
+        $OUT .= "$leftid $rightid : PSK \"$psk\"\n";
+    }
+}
+

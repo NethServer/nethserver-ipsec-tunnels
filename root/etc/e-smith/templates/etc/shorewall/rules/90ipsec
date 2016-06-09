@@ -1,0 +1,15 @@
+{
+    use esmith::ConfigDB;
+    my $db = esmith::ConfigDB->open_ro('vpn') || return '';
+    foreach ($db->get_all_by_prop('type' => 'ipsec-tunnel')) {
+        my $status = $_->prop('status') || 'disabled';
+        next if ($status eq 'disabled');
+        my $nets = $_->prop('rightsubnets') || '';
+        next if ($nets eq '');
+        $OUT .= "?COMMENT reject ipsec-tunnel: ".$_->key."\n";
+        foreach my $net (split(',', $nets)) {
+            $OUT .= "REJECT loc net:$net\n";
+        }
+        $OUT .= "?COMMENT\n";
+    }
+}

@@ -1,0 +1,23 @@
+{
+    #
+    # 30net2net_custom
+    #
+    foreach my $tunnel ($vpnsDb->get_all_by_prop('type' => 'ipsec-tunnel')) {
+	my $status = $tunnel->prop('status') || 'disabled';
+        next if ($status ne 'enabled');
+
+        my $name = $tunnel->key . '_ipsec-tunnel';
+        my $props = $conn->{$name};
+        foreach my $key ( keys %$props ) {
+            if ($key =~ /^Custom_/) {
+                $value = $conn->{$name}{$key};
+                $new_key = substr($key, 7);
+                $conn->{$name}{$new_key} = $value;
+                delete($conn->{$name}{$key});
+            }
+        }
+
+   }
+ 
+    '';
+}
