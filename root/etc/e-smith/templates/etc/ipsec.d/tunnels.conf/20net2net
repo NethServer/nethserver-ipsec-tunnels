@@ -50,6 +50,13 @@
             push(@to_be_deleted, 'salifetime');
         }
 
+        # set dpd default values
+        my $dpdaction = $props{'dpdaction'} || '';
+        if ($dpdaction ne '') {
+            $props{'dpdtimeout'} = 120;
+            $props{'dpddelay'} = 30;
+        }
+
         $haystack = NetAddr::IP->new($haystack);
         foreach ($ndb->interfaces()) {
             my $ipaddr = $_->prop('ipaddr') || next;
