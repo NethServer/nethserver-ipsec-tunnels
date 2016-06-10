@@ -37,7 +37,6 @@ event_templates('nethserver-ipsec-tunnels-update', qw(
 
 event_services('nethserver-ipsec-tunnels-update', qw(
     ipsec restart
-    rsyslog restart
 ));
 
 #
