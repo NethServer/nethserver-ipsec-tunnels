@@ -4,12 +4,12 @@
     foreach ($db->get_all_by_prop('type' => 'ipsec-tunnel')) {
         my $status = $_->prop('status') || 'disabled';
         next if ($status eq 'disabled');
-        my $nets = $_->prop('rightsubnets') || '';
-        next if ($nets eq '');
+        my $lnets = $_->prop('leftsubnets') || '';
+        my $rnets = $_->prop('rightsubnets') || '';
+        next if ($lnets eq '');
+        next if ($rnets eq '');
         $OUT .= "?COMMENT reject ipsec-tunnel: ".$_->key."\n";
-        foreach my $net (split(',', $nets)) {
-            $OUT .= "REJECT loc net:$net\n";
-        }
+        $OUT .= "REJECT loc:$lnets net:$rnets\n";
         $OUT .= "?COMMENT\n";
     }
 }
