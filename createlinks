@@ -56,3 +56,15 @@ event_actions('nethserver-ipsec-tunnels-save', qw(
     trusted-networks-modify 95
 ));
 
+#
+# Event interface-update
+#
+
+event_templates('interface-update', qw(
+    /etc/ipsec.d/tunnels.conf
+));
+
+event_services('interface-update', qw(
+    ipsec restart
+));
+
