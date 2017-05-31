@@ -70,6 +70,10 @@ class IpsecTunnels extends \Nethgui\Controller\TableController
 
     public function prepareViewForColumnState(\Nethgui\Controller\Table\Read $action, \Nethgui\View\ViewInterface $view, $key, $values, &$rowMetadata)
     {
+        if (!isset($values['status']) || ($values['status'] == "disabled")) {
+            $rowMetadata['rowCssClass'] = trim($rowMetadata['rowCssClass'] . ' user-locked');
+        }
+
         $status = $this->readStatus();
         if (!isset($status[$key])) {
             return '-';
