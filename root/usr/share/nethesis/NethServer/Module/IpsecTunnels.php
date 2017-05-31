@@ -40,6 +40,9 @@ class IpsecTunnels extends \Nethgui\Controller\TableController
 
         $columns = array(
             'Key',
+            'leftsubnets',
+            'rightsubnets',
+            'state',
             'Actions'
         );
 
@@ -55,4 +58,27 @@ class IpsecTunnels extends \Nethgui\Controller\TableController
         parent::initialize();
     }
 
+    private function readStatus()
+    {
+        static $status;
+
+        if (!isset($status)) {
+            $status = json_decode($this->getPlatform()->exec('sudo /usr/libexec/nethserver/ipsec-status')->getOutput(), true);
+        }
+        return $status;
+    }
+
+    public function prepareViewForColumnState(\Nethgui\Controller\Table\Read $action, \Nethgui\View\ViewInterface $view, $key, $values, &$rowMetadata)
+    {
+        $status = $this->readStatus();
+        if (!isset($status[$key])) {
+            return '-';
+        }
+
+        if (($status[$key]['status'])) {
+           return '<i class="fa fa-check-circle" style="color: green; font-size: 150%"></i>';
+        } else {
+           return '<i class="fa fa-warning" style="color: red; font-size: 150%"></i>';
+        }
+    }
 }
