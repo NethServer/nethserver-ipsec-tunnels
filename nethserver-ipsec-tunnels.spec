@@ -1,6 +1,6 @@
 Summary: NethServer VPN IPsec tunnels
 Name: nethserver-ipsec-tunnels
-Version: 1.0.1
+Version: 1.1.0
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -41,6 +41,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Jun 01 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.0-1
+- IPSec tunnel: green network address not updated - Bug NethServer/dev#5291
+
 * Thu Jul 21 2016 Davide Principi <davide.principi@nethesis.it> - 1.0.1-1
  - ipsec tunnel: properly reject unencrypted traffic - Bug NethServer/dev#5048
 
