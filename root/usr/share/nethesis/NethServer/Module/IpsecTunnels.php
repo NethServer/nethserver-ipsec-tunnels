@@ -53,9 +53,24 @@ class IpsecTunnels extends \Nethgui\Controller\TableController
             ->addTableAction(new \Nethgui\Controller\Table\Help('Help'))
             ->addRowAction(new \NethServer\Module\IpsecTunnels\Modify('update'))
             ->addRowAction(new \NethServer\Module\IpsecTunnels\Modify('delete'))
+            ->addRowAction(new \NethServer\Module\IpsecTunnels\TunnelCtl('enable'))
+            ->addRowAction(new \NethServer\Module\IpsecTunnels\TunnelCtl('disable'))
         ;
 
         parent::initialize();
+    }
+
+    public function prepareViewForColumnActions(\Nethgui\Controller\Table\Read $action, \Nethgui\View\ViewInterface $view, $key, $values, &$rowMetadata)
+    {
+        $cellView = $action->prepareViewForColumnActions($view, $key, $values, $rowMetadata);
+
+        if (!isset($values['status']) || ($values['status'] == "disabled")) {
+            unset($cellView['disable']);
+        } else {
+            unset($cellView['enable']);
+        }
+
+        return $cellView;
     }
 
     private function readStatus()
