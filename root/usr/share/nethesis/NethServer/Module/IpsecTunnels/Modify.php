@@ -65,7 +65,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
             $i_names[] = "%$key";
         }
         $lc = $this->createValidator()->memberOf($i_names);
-        $rv = $this->createValidator()->orValidator($this->createValidator(Validate::IPv4), $this->createValidator()->equalTo('%any'));
+        $rv = $this->createValidator()->orValidator($this->createValidator(Validate::HOSTADDRESS), $this->createValidator()->equalTo('%any'));
         $idv = $this->createValidator()->maxLength(63);
 
         $parameterSchema = array(
