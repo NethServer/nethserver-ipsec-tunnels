@@ -103,6 +103,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
         $this->setDefaultValue('ikelifetime', '86400');
         $this->setDefaultValue('salifetime', '3600');
         $this->setDefaultValue('leftsubnets', implode(",",$this->readNetworks()));
+        $this->setDefaultValue('psk', bin2hex(openssl_random_pseudo_bytes(10)));
 
         parent::initialize();
     }
