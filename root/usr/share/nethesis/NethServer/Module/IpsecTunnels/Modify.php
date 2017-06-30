@@ -65,7 +65,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
             $i_names[] = "%$key";
         }
         $lc = $this->createValidator()->memberOf($i_names);
-        $rv = $this->createValidator()->orValidator($this->createValidator(Validate::IPv4), $this->createValidator()->equalTo('%any'));
+        $rv = $this->createValidator()->orValidator($this->createValidator(Validate::HOSTADDRESS), $this->createValidator()->equalTo('%any'));
         $idv = $this->createValidator()->maxLength(63);
 
         $parameterSchema = array(
@@ -103,6 +103,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
         $this->setDefaultValue('ikelifetime', '86400');
         $this->setDefaultValue('salifetime', '3600');
         $this->setDefaultValue('leftsubnets', implode(",",$this->readNetworks()));
+        $this->setDefaultValue('psk', bin2hex(openssl_random_pseudo_bytes(10)));
 
         parent::initialize();
     }
