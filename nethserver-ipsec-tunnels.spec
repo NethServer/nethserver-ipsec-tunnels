@@ -1,6 +1,6 @@
 Summary: NethServer VPN IPsec tunnels
 Name: nethserver-ipsec-tunnels
-Version: 1.1.1
+Version: 1.1.2
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -41,6 +41,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon May 21 2018 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.2-1
+- IPSec tunnel: no connection after update to CentOS 7.5 - Bug NethServer/dev#5501
+- Blank dropdown 'local IP' in IPsec setting page - Bug NethServer/dev#5502
+
 * Thu Jul 06 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.1-1
 - IPSec tunnels: UI tweaks - NethServer/dev#5323
 
