@@ -188,6 +188,17 @@ class Modify extends \Nethgui\Controller\Table\Modify
         return $ret;
     }
 
+    public function validate(\Nethgui\Controller\ValidationReportInterface $report)
+    {
+        if ( ! $this->getRequest()->isMutation()) {
+            return;
+        }
+        elseif  ($this->parameters['left'] === NULL) {
+            $report->addValidationErrorMessage($this, 'left', 'ExpectAtLeastOneRedNic');
+        }
+        parent::validate($report);
+    }
+
     protected function onParametersSaved($changedParameters)
     {
         $this->getPlatform()->signalEvent('nethserver-ipsec-tunnels-save');
