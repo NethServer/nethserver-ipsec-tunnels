@@ -60,4 +60,4 @@ $L['IpsecTunnels_disable_title'] = 'Disable tunnel "${0}"';
 $L['confirm_enable_label'] = 'Enable tunnel "${0}" now?';
 $L['confirm_disable_label'] = 'Disable tunnel "${0}" now?';
 $L['Confirm_label'] = 'Confirm';
-$L['ExpectAtLeastOneRedNic'] = 'Needs at least one RED Interface to use IPSEC tunnel';
+$L['ExpectAtLeastOneRedNic'] = 'It is necessary to have at least one RED Interface to use IPSEC tunnel';
