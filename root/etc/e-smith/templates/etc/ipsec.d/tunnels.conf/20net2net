@@ -67,6 +67,14 @@
             }
         }
 
+        # HACK for libreswan-3.23 (RHEL 7.5)
+        # Try to convert interface name to IP address,
+        # if no IP address has been found, fallback to %defaultroute
+        # %defaultroute will work only for non-multiwan environement
+        my $iname = substr($props{'left'},1);
+        my $interface = $ndb->get($iname);
+        $props{'left'} =  $interface->prop('ipaddr') || "%defaultroute";
+
         # remove empty options
         for (keys %props) {
             delete $props{$_} unless $props{$_} 
