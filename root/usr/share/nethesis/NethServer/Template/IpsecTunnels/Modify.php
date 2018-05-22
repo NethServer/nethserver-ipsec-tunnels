@@ -39,7 +39,7 @@ $global = $view->fieldset()->setAttribute('template', $T('general_label'))
 ;
 
 $auth = $view->fieldset()->setAttribute('template', $T('auth_label'))
-    ->insert($view->textInput('psk'))
+    ->insert($view->textArea('psk', $view::LABEL_ABOVE)->setAttribute('dimensions', '5x30'))
 ;
 
 $left = $view->panel()
