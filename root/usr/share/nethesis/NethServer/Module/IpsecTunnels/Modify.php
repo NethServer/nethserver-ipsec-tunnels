@@ -29,8 +29,8 @@ use Nethgui\System\PlatformInterface as Validate;
  */
 class Modify extends \Nethgui\Controller\Table\Modify
 {
-    private $ciphers = array('aes128', 'aes192', 'aes256', '3des');
-    private $hashes = array('sha1', 'sha2_256', 'sha2_384', 'sha2_512', 'md5');
+    private $ciphers = array('3des', 'aes128', 'aes192', 'aes256');
+    private $hashes = array('md5', 'sha1', 'sha2_256', 'sha2_384', 'sha2_512');
     private $pfsgroups = array('modp1024','modp1536', 'modp2048', 'modp3072', 'modp4096', 'modp6144', 'modp8192');
 
     private function getNetworkInterfaces()
