@@ -1,6 +1,6 @@
 Summary: NethServer VPN IPsec tunnels
 Name: nethserver-ipsec-tunnels
-Version: 1.1.3
+Version: 1.1.4
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -41,6 +41,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jun 08 2018 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.4-1
+- Ipsec: sort the cipher order from weak to strong - NethServer/dev#5507
+
 * Mon Jun 04 2018 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.3-1
 - Ipsec: harden the PSK key - NethServer/dev#5504
 
