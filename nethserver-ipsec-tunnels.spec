@@ -1,6 +1,6 @@
 Summary: NethServer VPN IPsec tunnels
 Name: nethserver-ipsec-tunnels
-Version: 1.1.4
+Version: 1.1.5
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -41,6 +41,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Jan 17 2019 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.5-1
+- ipsec tunnels stop to work if invalid PFS policy is applied - Bug NethServer/dev#5696
+
 * Fri Jun 08 2018 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.4-1
 - Ipsec: sort the cipher order from weak to strong - NethServer/dev#5507
 
