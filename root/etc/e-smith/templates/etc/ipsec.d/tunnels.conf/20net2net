@@ -43,7 +43,11 @@
         }
 
         if ($esp eq 'custom') {
-            $props{'phase2alg'} = $props{'espcipher'} .'-'.  $props{'esphash'} .';'. $props{'esppfsgroup'};
+            # Set PFS group only if PFS is disabled
+            $props{'phase2alg'} = $props{'espcipher'} .'-'.  $props{'esphash'};
+            if ($props{'pfs'} eq 'yes') {
+                $props{'phase2alg'} .= ';'. $props{'esppfsgroup'};
+            }
             $t = $props{'salifetime'} || "3600";
             $props{'salifetime'} = $t .'s';
         } else {
