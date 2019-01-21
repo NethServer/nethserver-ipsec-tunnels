@@ -1,6 +1,6 @@
 Summary: NethServer VPN IPsec tunnels
 Name: nethserver-ipsec-tunnels
-Version: 1.1.5
+Version: 1.1.6
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -41,6 +41,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jan 21 2019 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.6-1
+- Bad label on IPsec Tunnel configuration (DH-24 instead of DH-14) - Bug NethServer/dev#5699
+
 * Thu Jan 17 2019 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.5-1
 - ipsec tunnels stop to work if invalid PFS policy is applied - Bug NethServer/dev#5696
 
