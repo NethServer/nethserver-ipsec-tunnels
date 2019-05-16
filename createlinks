@@ -68,3 +68,14 @@ event_services('interface-update', qw(
     ipsec restart
 ));
 
+#
+# Event nethserver-ipsec-tunnels-modify
+#
+event_templates('nethserver-ipsec-tunnels-modify', qw(
+    /etc/ipsec.d/tunnels.conf
+));
+
+event_actions('nethserver-ipsec-tunnels-modify', qw(
+    nethserver-ipsec-tunnels-edit 40
+));
+
