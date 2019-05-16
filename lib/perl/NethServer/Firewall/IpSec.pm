@@ -34,6 +34,8 @@ sub ipsec_tunnels
 {
     my $value = shift;
 
+    return '' if(!$value);;
+
     my $vpn_db = esmith::DB::db->open_ro('vpn');
     foreach ($vpn_db->get_all_by_prop('type' => 'ipsec-tunnel')) {
         my $subnets = $_->prop('rightsubnets') || 'next';
