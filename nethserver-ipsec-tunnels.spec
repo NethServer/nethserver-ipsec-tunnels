@@ -9,6 +9,7 @@ BuildArch: noarch
 
 Requires: openswan
 Requires: nethserver-firewall-base
+Requires: nethserver-vpn-ui
 
 BuildRequires: nethserver-devtools 
 
