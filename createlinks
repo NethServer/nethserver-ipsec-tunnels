@@ -77,7 +77,5 @@ event_templates('nethserver-ipsec-tunnels-modify', qw(
 
 event_actions('nethserver-ipsec-tunnels-modify', qw(
     nethserver-ipsec-tunnels-edit 40
-    firewall-adjust 50
-    trusted-networks-modify 95
 ));
 
