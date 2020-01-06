@@ -35,10 +35,12 @@ sub ipsec_tunnels
     my $results = shift;
 
     my $vpn_db = esmith::DB::db->open_ro('vpn');
-    foreach ($vpn_db->get_all_by_prop('type' => 'ipsec-tunnel')) {
-        my $subnets = $_->prop('rightsubnets') || 'next';
-        foreach my $net (split(/,/, $subnets)) {
-            push(@$results, {'cidr' => $net, 'provider' => 'IPsec'});
+    if (defined $vpn_db) {
+        foreach ($vpn_db->get_all_by_prop('type' => 'ipsec-tunnel')) {
+            my $subnets = $_->prop('rightsubnets') || 'next';
+            foreach my $net (split(/,/, $subnets)) {
+                push(@$results, {'cidr' => $net, 'provider' => 'IPsec'});
+            }
         }
     }
 }
