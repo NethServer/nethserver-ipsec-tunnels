@@ -76,7 +76,12 @@
         # if no IP address has been found, fallback to %defaultroute
         # %defaultroute will work only for non-multiwan environment
         my $iname = substr($props{'left'},1);
-        $props{'left'} = $ndb->get_prop($iname, 'ipaddr') || "%defaultroute";
+        my $bootproto = $ndb->get_prop($iname, 'bootproto');
+        if ($bootproto eq 'dhcp') {
+            $props{'left'} = "%defaultroute";
+        } else {
+            $props{'left'} = $ndb->get_prop($iname, 'ipaddr') || "%defaultroute";
+        }
 
         # remove empty options
         for (keys %props) {
