@@ -32,7 +32,7 @@ my $cdb = esmith::ConfigDB->open('vpn');
 # ARGV[1] is the first real parameter
 if (defined($ARGV[1]) && $ARGV[1] eq '--skip-network') {
 
-    # Delete all network interfaces
+    # Disable ipsec tunnels using non existing interfaces
     foreach my $item ($cdb->get_all_by_prop('type', 'ipsec-tunnel')) {
         my $left = $item->prop('left');
         my $cleft = $item->prop('Custom_left');
