@@ -78,3 +78,10 @@ event_actions('nethserver-ipsec-tunnels-modify', qw(
     nethserver-ipsec-tunnels-edit 40
 ));
 
+#
+# Event post-restore-config
+#
+event_actions('post-restore-config', qw(
+    nethserver-ipsec-tunnels-network-reset 03
+));
+
