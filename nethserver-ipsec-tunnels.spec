@@ -1,6 +1,6 @@
 Summary: NethServer VPN IPsec tunnels
 Name: nethserver-ipsec-tunnels
-Version: 1.2.0
+Version: 1.2.1
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -42,6 +42,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Mar 30 2020 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.2.1-1
+- IPsec and WAN in DHCP - Bug NethServer/dev#6096
+
 * Wed Jun 19 2019 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.2.0-1
 - VPN Cockpit UI - NethServer/dev#5760
 - save event: avoid double firewall restart
