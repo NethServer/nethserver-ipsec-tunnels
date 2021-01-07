@@ -79,9 +79,19 @@ event_actions('nethserver-ipsec-tunnels-modify', qw(
 ));
 
 #
+# Event nethserver-ipsec-tunnels-delete
+#
+event_templates('nethserver-ipsec-tunnels-delete', qw(
+    /etc/ipsec.d/tunnels.conf
+));
+
+event_actions('nethserver-ipsec-tunnels-delete', qw(
+    nethserver-ipsec-tunnels-delete 01
+));
+
+#
 # Event post-restore-config
 #
 event_actions('post-restore-config', qw(
     nethserver-ipsec-tunnels-network-reset 03
 ));
-
