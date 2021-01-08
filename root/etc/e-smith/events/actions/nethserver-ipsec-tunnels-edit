@@ -20,7 +20,7 @@
 
 event=$1
 action=$2
-tunnel=$3
+tunnel="${3}_ipsec-tunnel"
 
 if [ -z "$event" ]; then
     exit 0
