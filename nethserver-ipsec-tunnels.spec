@@ -1,6 +1,6 @@
 Summary: NethServer VPN IPsec tunnels
 Name: nethserver-ipsec-tunnels
-Version: 1.2.2
+Version: 1.2.3
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -42,6 +42,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Jan 12 2021 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.2.3-1
+- VPN: IPSEC tunnels are not deleted with cockpit - Bug NethServer/dev#6389
+
 * Tue Apr 07 2020 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.2.2-1
 - Restore configuration without network override - NethServer/dev#6099
 
