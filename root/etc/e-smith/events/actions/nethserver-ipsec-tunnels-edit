@@ -33,18 +33,14 @@ if [ "$action" == "create" ]; then
 elif [ "$action" == "modify" ]; then
     /usr/sbin/ipsec auto --delete "$tunnel"
     /usr/sbin/ipsec auto --start "$tunnel"
-elif [ "$action" == "delete" ] || [ "$action" == "disable" ]; then
+elif [ "$action" == "delete" ]; then
     /usr/sbin/ipsec auto --delete "$tunnel"
+    ret=$?
 
-    # Destroy a non existing connexion with conntrack leads to stderr error
-    TEST500=$(/usr/sbin/conntrack -L  -d  $remoteIP --proto UDP --sport 500 --dport 500)
-    if [[ $TEST500 != '' ]];then
-        /usr/sbin/conntrack -D  -d  $remoteIP --proto UDP --sport 500 --dport 500
+    if [ ! -z "$remoteIP" ]; then
+        /usr/sbin/conntrack -D  -d  $remoteIP --proto UDP --sport 500 --dport 500 2>/dev/null
+        /usr/sbin/conntrack -D  -d  $remoteIP --proto UDP --sport 4500 --dport 4500 2>/dev/null
     fi
 
-    TEST4500=$(/usr/sbin/conntrack -L  -d  $remoteIP --proto UDP --sport 4500 --dport 4500)
-    if [[ $TEST4500 != '' ]];then
-        /usr/sbin/conntrack -D  -d  $remoteIP --proto UDP --sport 4500 --dport 4500
-    fi
-
+    exit $ret
 fi
