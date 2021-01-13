@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 # Copyright (C) 2019 Nethesis S.r.l.
 # http://www.nethesis.it - nethserver@nethesis.it
@@ -21,16 +22,25 @@
 event=$1
 action=$2
 tunnel="${3}_ipsec-tunnel"
+remoteIP=$4
 
 if [ -z "$event" ]; then
     exit 0
 fi
 
 if [ "$action" == "create" ]; then
-    ipsec auto --start "$tunnel"
+    /usr/sbin/ipsec auto --start "$tunnel"
 elif [ "$action" == "modify" ]; then
-    ipsec auto --delete "$tunnel"
-    ipsec auto --start "$tunnel"
+    /usr/sbin/ipsec auto --delete "$tunnel"
+    /usr/sbin/ipsec auto --start "$tunnel"
 elif [ "$action" == "delete" ]; then
-    ipsec auto --delete "$tunnel"
+    /usr/sbin/ipsec auto --delete "$tunnel"
+    ret=$?
+
+    if [ ! -z "$remoteIP" ]; then
+        /usr/sbin/conntrack -D  -d  $remoteIP --proto UDP --sport 500 --dport 500 2>/dev/null
+        /usr/sbin/conntrack -D  -d  $remoteIP --proto UDP --sport 4500 --dport 4500 2>/dev/null
+    fi
+
+    exit $ret
 fi
